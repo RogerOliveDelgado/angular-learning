@@ -1,3 +1,4 @@
+import { NgFor, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { DUMMY_USERS } from './dummy-users';
@@ -8,13 +9,20 @@ import { UserComponent } from './user/user.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, UserComponent, TasksComponent],
+  imports: [
+    RouterOutlet,
+    HeaderComponent,
+    UserComponent,
+    TasksComponent,
+    NgFor,
+    NgIf,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
   users = DUMMY_USERS;
-  selectedUserId = 'u1';
+  selectedUserId?: string;
 
   get selectedUser() {
     return this.users.find((user) => user.id === this.selectedUserId);
