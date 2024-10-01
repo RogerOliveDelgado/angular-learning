@@ -1,10 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { v4 as uuidv4 } from 'uuid';
 import { dummyTasks } from '../dummy-tasks';
 import { HeaderComponent } from '../header/header.component';
 import { NewTaskComponent } from '../new-task/new-task.component';
 import { TaskComponent } from '../task/task.component';
-import { type NewTaskData } from '../task/task.model';
+import { TasksService } from './tasks.service';
 
 @Component({
   selector: 'app-tasks',
@@ -20,6 +19,8 @@ export class TasksComponent {
   isAddingTask = false;
   tasks = dummyTasks;
 
+  constructor(private TaskService: TasksService) {}
+
   get selectedUserTasks() {
     return this.tasks.filter((task) => task.userId === this.userId);
   }
@@ -32,18 +33,7 @@ export class TasksComponent {
     this.isAddingTask = true;
   }
 
-  onCancelAddTask() {
-    this.isAddingTask = false;
-  }
-
-  onAddTask(taskData: NewTaskData) {
-    this.tasks.unshift({
-      id: uuidv4(),
-      userId: this.userId,
-      title: taskData.title,
-      summary: taskData.summary,
-      dueDate: taskData.dueDate,
-    });
+  onCloseAddTask() {
     this.isAddingTask = false;
   }
 }
